@@ -7,7 +7,7 @@
                 {{ album.albumName }}
             </a>
             <div v-for="music in album.musics">
-                <a href="" v-show="actualAlbum === album.albumName" v-on:click.prevent="play(album.path, music.id, music.musicName, music.extension)" class="music">
+                <a v-link="{name: 'homeMusic', params: {id: music.id}}" v-show="actualAlbum === album.albumName" class="music">
                     &emsp;
                     <span class="glyphicon glyphicon-music music" aria-hidden="true"></span>
                     {{ music.musicName }}

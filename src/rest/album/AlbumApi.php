@@ -2,13 +2,13 @@
     require_once 'Album.php';
 
     header('Content-Type: application/json');
-    header('Access-Control-Allow-Origin: http://localhost:8080');
+    header('Access-Control-Allow-Origin: *');
 
     $createCacheAction = 'createCache';
     $loadAlbumAction = 'loadAlbum';
     $getMusicAction = 'getMusic';
     $cachePath = '/var/www/src/rest/album/savedAlbums';
-    $musicPath = '/music/Musicas';
+    $musicPath = '/var/www/music';
 
     $action = $_GET['action'];
     $page =  $_GET['page'];
@@ -23,15 +23,18 @@
     $album->setMusicPath($musicPath);
     $album->setPaginationLimit(10000);
 
-    if ($action == $createCacheAction) {
-        $album->createCache();
-    }
+    try {
+        if ($action == $createCacheAction) {
+            echo json_encode($album->createCache());
+        }
 
-    if ($action == $loadAlbumAction) {
-        echo json_encode($album->loadAlbums($page));
-    }
+        if ($action == $loadAlbumAction) {
+            echo json_encode($album->loadAlbums($page));
+        }
 
-    if ($action == $getMusicAction) {
-        print json_encode($album->getMusicById($idMusic));
-
+        if ($action == $getMusicAction) {
+            echo json_encode($album->getMusicById($idMusic));
+        }
+    } catch (\Execption $e) {
+        echo json_encode(['status' => 'ERROR', 'message' => $e->getMessage()]);
     }

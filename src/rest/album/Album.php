@@ -5,9 +5,10 @@ class Album
     protected static $album = array();
     protected static $musicPath;
     protected static $cachePath;
-    protected static $allowedExtensions = array('mp3','wma','wma');
+    protected static $allowedExtensions = ['mp3', 'ogg', 'flac', 'm4a'];
     protected static $paginationLimit;
     protected static $minimumAlbumLen = 5;
+    protected static $interator = 1;
 
     public function setMusicPath($musicPathParam)
     {
@@ -62,45 +63,79 @@ class Album
     public function createCache()
     {
         $directoryIterator = new RecursiveDirectoryIterator(Album::$musicPath);
-        $i = 1;
 
         foreach ($directoryIterator as $directory) {
-            $album = substr($directory->getPathName(),strrpos($directory->getPathName(), '/') + 1);
-            $path = $directory->getPathName() . DIRECTORY_SEPARATOR;
+            $album = substr($directory->getPathName(), strrpos($directory->getPathName(), '/') + 1);
 
             if ($directory->isDir() && strlen($album) > $this->getMinimumAlbumLen()) {
-                $subDirectoryIterator  = new RecursiveDirectoryIterator($path);
+
+                $path =  substr($directory->getPathName(),8);
+                $subDirectoryIterator  = new RecursiveDirectoryIterator($directory->getPathName());
                 $musics = null;
 
                 foreach ($subDirectoryIterator as $subDirectory) {
                     if ($subDirectory->isFile() && in_array($subDirectory->getExtension(), Album::$allowedExtensions)) {
                         $musics[] = [
-                            'id' => $i,
+                            'id' => Album::$interator,
                             'musicName' => substr($subDirectory->getPathName(),strrpos($subDirectory->getPathName(), '/') + 1),
                             'extension' => '.' . $subDirectory->getExtension()
                         ];
-                        $i++;
+                        Album::$interator++;
                     }
                 }
-                $this->setAlbum(['albumName' => $album, 'path' => $path, 'musics' => $musics]);
+
+                if (count($musics)) {
+                    $this->setAlbum(['albumName' => $album, 'path' => $path, 'musics' => $musics]);
+                }
             }
         }
 
         $this->saveAlbum($this->getAlbum());
+        return $this->loadAlbums(1);
+    }
+
+    protected function getMusicsRecursive(RecursiveDirectoryIterator $directoryIterator)
+    {
+        $response = [];
+
+        if ($directoryIterator->isDir()) {
+            $directory  = new RecursiveDirectoryIterator($directoryIterator->getPathName());
+            var_dump($directory);
+            exit();
+            foreach ($directory as $subDirectory) {
+                if ($subDirectory->isFile() && in_array($subDirectory->getExtension(), Album::$allowedExtensions)) {
+                    $musics[] = [
+                        'id' => Album::$interator,
+                        'albumName' => substr($subDirectory->getPathName(), strrpos($subDirectory->getPathName(), '/') + 1),
+                        'path' => substr($subDirectory->getPathName(),strrpos($subDirectory->getPathName(), 'w') + 1),
+                        'musicName' => substr($subDirectory->getPathName(),strrpos($subDirectory->getPathName(), '/') + 1),
+                        'extension' => '.' . $subDirectory->getExtension()
+                    ];
+                    Album::$interator++;
+                    $response[] = $musics;
+                } else {
+                    $response[] = $this->getMusicsRecursive();
+                }
+            }
+        }
+
+        return $response;
     }
 
     public function loadAlbums($page)
     {
-
         $cache = unserialize(file_get_contents($this->getCachePath() . DIRECTORY_SEPARATOR . 'Cache'));
-
         $initialMusic = $page * $this->getPaginationLimit() - $this->getPaginationLimit();
         $finalMusic = $initialMusic + $this->getPaginationLimit();
-
+        $id = 0;
 
         for ($i = $initialMusic; $i <= $finalMusic; $i++) {
-            $album[] = $cache['albums'][$i];
+            if ($cache['albums'][$i]) {
+                $album[] = $cache['albums'][$i];
+            }
         }
+
+        $album = $this->sortArray($album, 'albumName');
 
         return $album;
     }
@@ -129,5 +164,20 @@ class Album
         $content = serialize($cache);
 
         file_put_contents($this->getCachePath() . DIRECTORY_SEPARATOR . 'Cache', $content);
+    }
+
+    protected function sortArray($array, $fieldToSort)
+    {
+        foreach ($array as $itemArray) {
+            $parsedArray[$itemArray[$fieldToSort]] = $itemArray;
+        }
+
+        ksort($parsedArray);
+
+        foreach ($parsedArray as $parsedItem) {
+            $sortedArray[] = $parsedItem;
+        }
+
+        return $sortedArray;
     }
 }

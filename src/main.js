@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import App from './App'
+import Vue from 'vue';
+import Router from './router/router';
+import Vuex from 'vuex';
+import App from './App';
 
-/* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  components: { App }
-})
+const app = Vue.extend(App);
+
+Router.start(app, '#app')

@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Actions from '../vuex/actions'
 import Fetch from 'whatwg-fetch'
+import { baseUrl } from '../router/router'
 
 export const getMusicById = function (id)
 {
-    const url = 'http://localhost:9001/src/rest/album/AlbumApi.php?action=getMusic&id=' + id
+    const url = `${baseUrl}/src/rest/album/AlbumApi.php?action=getMusic&id=${id}`
 
     return fetch(url)
         .then(function (response) {
@@ -18,7 +19,7 @@ export const getMusicById = function (id)
 
 export function getAlbums()
 {
-    const url = 'http://localhost:9001/src/rest/album/AlbumApi.php?action=loadAlbum&page=1'
+    const url = `${baseUrl}/src/rest/album/AlbumApi.php?action=loadAlbum&page=1`
 
     return fetch(url)
         .then(function (response) {

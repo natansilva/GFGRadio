@@ -1,21 +1,20 @@
 <template>
-<div id="app">
-    <player class="col-md-12 text-center"></player>
-    <playlist class="col-md-4 text-left"></playlist>
+<div>
+    <router-view keep-alive class="col-md-12 text-center"></router-view>
+    <playlist class="col-md-6 text-left"></playlist>
 </div>
 </template>
 
 <script>
 import Player from './components/Player'
 import Playlist from './components/Playlist'
-import store from './vuex/store'
+import Store from './vuex/store'
 
 export default {
     components: {
-        Player,
         Playlist
     },
-    store: store
+    store: Store
 }
 </script>
 

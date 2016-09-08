@@ -1,40 +1,49 @@
 import * as AlbumApi from '../api/AlbumApi'
+import Router from '../router/router'
 
 export const getAlbums = function ({ dispatch, state }) {
     const newAlbum = AlbumApi.getAlbums();
     dispatch('SET_ALBUM', newAlbum);
 }
 
-export const playMusic = function ({ dispatch, state }, pathFile, id, musicName, extension) {
-    console.log(pathFile)
-    dispatch('UPDATE_ACTUAL_MUSIC', pathFile, id, musicName, extension);
-}
-
-export const playNext = function ({ dispatch, state }, id) {
-    AlbumApi.getMusicById(id + 1).then(function(nextMusic) {
+export const playMusic = function ({ dispatch, state }, id) {
+    AlbumApi.getMusicById(id).then(function(music) {
         dispatch( 'UPDATE_ACTUAL_MUSIC',
-            nextMusic['pathFile'],
-            nextMusic['id'],
-            nextMusic['musicName'],
-            nextMusic['extension']
+            music['pathFile'],
+            music['id'],
+            music['musicName'],
+            music['extension']
         )
     }).catch(function(ex) {
         console.log(ex);
-    })
+    });
+}
+
+export const playNext = function ({ dispatch, state }, id) {
+    const nextId = id + 1;
+    Router.go({
+        name: 'homeMusic',
+        params: {
+            'id': nextId
+        }
+    });
 }
 
 export const playPrevious = function ({ dispatch, state }, id) {
-    AlbumApi.getMusicById(id - 1).then(function(previousMusic) {
-        dispatch(
-            'UPDATE_ACTUAL_MUSIC',
-            previousMusic['pathFile'],
-            previousMusic['id'],
-            previousMusic['musicName'],
-            previousMusic['extension']
-        )
-    }).catch(function(ex) {
-        console.log(ex)
-    })
+    const previousId = id;
+
+    if (id === 1) {
+        this.previousId = id;
+    } else {
+        this.previousId = id - 1;
+    }
+
+    Router.go({
+        name: 'homeMusic',
+        params: {
+            'id': this.previousId
+        }
+    });
 }
 
 export const setActualAlbum = function ({ dispatch, state }, newAlbum) {
@@ -44,13 +53,5 @@ export const setActualAlbum = function ({ dispatch, state }, newAlbum) {
 export const initializeAlbums = function ({ dispatch, state }) {
     AlbumApi.getAlbums().then(function(albums) {
         dispatch('SET_ALBUM', albums)
-
-        dispatch(
-            'UPDATE_ACTUAL_MUSIC',
-            albums[0]['path'],
-            albums[0]['musics'][0]['id'],
-            albums[0]['musics'][0]['musicName'],
-            albums[0]['musics'][0]['extension']
-        )
     })
 }

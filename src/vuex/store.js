@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { baseUrl } from '../router/router'
 
 Vue.use(Vuex)
 
@@ -18,7 +19,7 @@ const mutations = {
         state.actualPathFile = pathFile;
         state.actualMusic = musicName;
         state.actualExtension = extension;
-        state.url = `http://localhost:9001${pathFile}/${musicName}`;
+        state.url = baseUrl + `${pathFile}/${musicName}`;
         state.actualMusicId = id;
     },
 
