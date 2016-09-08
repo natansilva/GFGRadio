@@ -7,8 +7,7 @@ class Album
     protected static $cachePath;
     protected static $allowedExtensions = ['mp3', 'ogg', 'flac', 'm4a'];
     protected static $paginationLimit;
-    protected static $minimumAlbumLen = 5;
-    protected static $interator = 1;
+    protected static $minimumAlbumLen = 3;
 
     public function setMusicPath($musicPathParam)
     {
@@ -52,7 +51,9 @@ class Album
 
     protected function setAlbum($albumArray)
     {
+
         Album::$album[] = $albumArray;
+
     }
 
     protected function getAlbum()
@@ -76,50 +77,22 @@ class Album
                 foreach ($subDirectoryIterator as $subDirectory) {
                     if ($subDirectory->isFile() && in_array($subDirectory->getExtension(), Album::$allowedExtensions)) {
                         $musics[] = [
-                            'id' => Album::$interator,
                             'musicName' => substr($subDirectory->getPathName(),strrpos($subDirectory->getPathName(), '/') + 1),
                             'extension' => '.' . $subDirectory->getExtension()
                         ];
-                        Album::$interator++;
                     }
                 }
 
                 if (count($musics)) {
-                    $this->setAlbum(['albumName' => $album, 'path' => $path, 'musics' => $musics]);
+                    $this->setAlbum(['albumName' => $album, 'path' => $path, 'musics' => $this->sortArray($musics, 'musicName')]);
                 }
             }
         }
 
-        $this->saveAlbum($this->getAlbum());
+        $album = $this->sortArray($this->getAlbum(), 'albumName');
+        $album = $this->createMusicId($album);
+        $this->saveAlbum($album);
         return $this->loadAlbums(1);
-    }
-
-    protected function getMusicsRecursive(RecursiveDirectoryIterator $directoryIterator)
-    {
-        $response = [];
-
-        if ($directoryIterator->isDir()) {
-            $directory  = new RecursiveDirectoryIterator($directoryIterator->getPathName());
-            var_dump($directory);
-            exit();
-            foreach ($directory as $subDirectory) {
-                if ($subDirectory->isFile() && in_array($subDirectory->getExtension(), Album::$allowedExtensions)) {
-                    $musics[] = [
-                        'id' => Album::$interator,
-                        'albumName' => substr($subDirectory->getPathName(), strrpos($subDirectory->getPathName(), '/') + 1),
-                        'path' => substr($subDirectory->getPathName(),strrpos($subDirectory->getPathName(), 'w') + 1),
-                        'musicName' => substr($subDirectory->getPathName(),strrpos($subDirectory->getPathName(), '/') + 1),
-                        'extension' => '.' . $subDirectory->getExtension()
-                    ];
-                    Album::$interator++;
-                    $response[] = $musics;
-                } else {
-                    $response[] = $this->getMusicsRecursive();
-                }
-            }
-        }
-
-        return $response;
     }
 
     public function loadAlbums($page)
@@ -134,8 +107,6 @@ class Album
                 $album[] = $cache['albums'][$i];
             }
         }
-
-        $album = $this->sortArray($album, 'albumName');
 
         return $album;
     }
@@ -171,13 +142,35 @@ class Album
         foreach ($array as $itemArray) {
             $parsedArray[$itemArray[$fieldToSort]] = $itemArray;
         }
-
         ksort($parsedArray);
-
         foreach ($parsedArray as $parsedItem) {
             $sortedArray[] = $parsedItem;
         }
-
         return $sortedArray;
+    }
+
+    protected function createMusicId($albums)
+    {
+        $i = 1;
+
+        foreach ($albums as $album) {
+            $responseMusic = null;
+
+            foreach ($album['musics'] as $music) {
+                $responseMusic[] = [
+                    'id' => $i,
+                    'musicName' => $music['musicName'],
+                    'extension' => $music['extension'],
+                ];
+                $i++;
+            }
+            $responseAlbum[] = [
+                'albumName' => $album['albumName'],
+                'path' => $album['path'],
+                'musics' => $responseMusic,
+            ];
+        }
+
+        return $responseAlbum;
     }
 }
