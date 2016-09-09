@@ -19,6 +19,15 @@ export const playMusic = function ({ dispatch, state }, id) {
     });
 }
 
+export const play = function ({ dispatch, state }, id) {
+    Router.go({
+        name: 'homeMusic',
+        params: {
+            'id': id
+        }
+    });
+}
+
 export const playNext = function ({ dispatch, state }, id) {
     const nextId = id + 1;
     Router.go({
@@ -53,5 +62,11 @@ export const setActualAlbum = function ({ dispatch, state }, newAlbum) {
 export const initializeAlbums = function ({ dispatch, state }) {
     AlbumApi.getAlbums().then(function(albums) {
         dispatch('SET_ALBUM', albums)
-    })
+    });
+}
+
+export const getMusicsByName = function ({ dispatch, state }, name) {
+    AlbumApi.getMusicsByName(name).then(function (musics) {
+        dispatch('SET_FOUND_MUSICS', musics);
+    });
 }

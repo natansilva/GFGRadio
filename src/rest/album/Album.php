@@ -3,11 +3,14 @@ class Album
 {
     protected static $content = array();
     protected static $album = array();
+    protected static $music = array();
     protected static $musicPath;
     protected static $cachePath;
     protected static $allowedExtensions = ['mp3', 'ogg', 'flac', 'm4a'];
     protected static $paginationLimit;
     protected static $minimumAlbumLen = 3;
+    protected static $albumsFileName = 'CacheAlbums';
+    protected static $musicsFileName = 'CacheMusics';
 
     public function setMusicPath($musicPathParam)
     {
@@ -97,7 +100,7 @@ class Album
 
     public function loadAlbums($page)
     {
-        $cache = unserialize(file_get_contents($this->getCachePath() . DIRECTORY_SEPARATOR . 'Cache'));
+        $cache = unserialize(file_get_contents($this->getCachePath() . DIRECTORY_SEPARATOR . Album::$albumsFileName));
         $initialMusic = $page * $this->getPaginationLimit() - $this->getPaginationLimit();
         $finalMusic = $initialMusic + $this->getPaginationLimit();
         $id = 0;
@@ -113,7 +116,7 @@ class Album
 
     public function getMusicById($id)
     {
-        $cache = unserialize(file_get_contents($this->getCachePath() . DIRECTORY_SEPARATOR . 'Cache'));
+        $cache = unserialize(file_get_contents($this->getCachePath() . DIRECTORY_SEPARATOR . Album::$albumsFileName));
 
         foreach ($cache['albums'] as $album) {
             foreach ($album['musics'] as $music) {
@@ -127,14 +130,38 @@ class Album
         return $musicResult;
     }
 
-    protected function saveAlbum($album) {
+    public function findMusic($musicName)
+    {
+        if ($musicName == '') {
+            return [];
+        }
 
+        $cache = unserialize(file_get_contents($this->getCachePath() . DIRECTORY_SEPARATOR . Album::$albumsFileName));
+        $stringToFind = "/" . $musicName . "/i";
+        $musicResult = [];
+
+        foreach ($cache['albums'] as $album) {
+            foreach ($album['musics'] as $music) {
+                preg_match($stringToFind, $music['musicName'], $matches);
+                if (count($matches) > 0) {
+                    $music['pathFile'] = $album['path'];
+                    $music['albumName'] = $album['albumName'];
+                    $musicResult[] = $music;
+                }
+            }
+        }
+
+        return $musicResult;
+    }
+
+    protected function saveAlbum($album)
+    {
         $cache['totalAlbums'] = count($album);
         $cache['albums'] = $album;
 
         $content = serialize($cache);
 
-        file_put_contents($this->getCachePath() . DIRECTORY_SEPARATOR . 'Cache', $content);
+        file_put_contents($this->getCachePath() . DIRECTORY_SEPARATOR . Album::$albumsFileName, $content);
     }
 
     protected function sortArray($array, $fieldToSort)

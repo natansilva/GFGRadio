@@ -7,12 +7,14 @@
     $createCacheAction = 'createCache';
     $loadAlbumAction = 'loadAlbum';
     $getMusicAction = 'getMusic';
+    $findMusicAction = 'findMusic';
     $cachePath = '/var/www/src/rest/album/savedAlbums';
     $musicPath = '/var/www/music';
 
     $action = $_GET['action'];
     $page =  $_GET['page'];
     $idMusic = $_GET['id'];
+    $musicName = $_GET['musicName'];
 
     if(! $action) {
         echo json_encode(['status' => 'ERROR', 'message' => 'action.not.found']);
@@ -34,6 +36,10 @@
 
         if ($action == $getMusicAction) {
             echo json_encode($album->getMusicById($idMusic));
+        }
+
+        if ($action == $findMusicAction) {
+            echo json_encode($album->findMusic($musicName));
         }
     } catch (\Execption $e) {
         echo json_encode(['status' => 'ERROR', 'message' => $e->getMessage()]);

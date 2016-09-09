@@ -1,7 +1,7 @@
 <template>
     <div id="playerAudio">
         <div class="page-header"><h1>{{ actualMusic }}</h1></div>
-        <audio v-el:audio autoplay id="player" controls="" v-bind:src="url"></audio>
+        <audio v-el:audio v-on:ended="playNext(actualMusicId)" id="player" controls="" v-bind:src="url"></audio>
 
         </br>
         </br>
@@ -36,16 +36,15 @@ export default {
             }
 
             this.$els.audio.play();
-        }
+        },
     },
-
     route: {
         data: function() {
             if (this.$route.params.id) {
                 this.playMusic(this.$route.params.id);
             }
         }
-    }
+    },
 }
 </script>
 

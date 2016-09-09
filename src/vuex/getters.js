@@ -25,3 +25,7 @@ export function getActualAlbum (state) {
 export function getActualMusicId (state) {
     return state.actualMusicId
 }
+
+export function getMusics (state) {
+    return state.musics
+}

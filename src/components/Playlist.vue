@@ -1,6 +1,5 @@
 <template>
     <div id="playlist">
-        <div class="page-header"><h3>Musicas</h3></div>
         <div v-for="album in albums">
             <a href="" v-on:click.prevent="setActualAlbum(album.albumName)" class="album">
                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>

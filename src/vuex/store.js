@@ -11,7 +11,8 @@ const state = {
     actualExtension: '',
     url: '',
     actualAlbum: '',
-    albums: []
+    albums: [],
+    musics: [],
 };
 
 const mutations = {
@@ -33,6 +34,10 @@ const mutations = {
         } else {
             state.actualAlbum = newAlbum;
         }
+    },
+
+    SET_FOUND_MUSICS (state, musics) {
+        state.musics = musics;
     }
 };
 
