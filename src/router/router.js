@@ -10,11 +10,16 @@ const router = new Router({
 });
 
 router.map({
+    '/': {
+        name: 'home',
+        component: Player
+    },
+
     ':id': {
         name: 'homeMusic',
         component: Player
     }
 });
 
-export const baseUrl = 'http://10.10.31.232:9002';
+export const baseUrl = window.location.href.toString().substring(0, window.location.href.toString().indexOf('/#') - 1) + 2;
 export default router

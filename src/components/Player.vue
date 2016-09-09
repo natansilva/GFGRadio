@@ -41,7 +41,9 @@ export default {
 
     route: {
         data: function() {
-            this.playMusic(this.$route.params.id);
+            if (this.$route.params.id) {
+                this.playMusic(this.$route.params.id);
+            }
         }
     }
 }

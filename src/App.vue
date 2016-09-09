@@ -20,4 +20,14 @@ export default {
 
 <style>
     @import "./assets/bootstrap-3.3.7-dist/css/bootstrap.css";
+
+    #playerAudio {
+        position:fixed;
+        z-index: 9999;
+        background-color: #ffffff;
+    }
+
+    #playlist {
+        top:180px;
+    }
 </style>
