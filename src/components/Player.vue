@@ -1,6 +1,6 @@
 <template>
     <div id="playerAudio">
-        <div class="page-header"><h1>{{ actualMusic }}</h1></div>
+        <div class="page-header"><h3>{{ actualMusic }}</h3></div>
         <audio v-el:audio v-on:ended="playNext(actualMusicId)" id="player" controls="" v-bind:src="url"></audio>
 
         </br>
@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import * as getters from '../vuex/getters'
-import * as actions from '../vuex/actions'
+import * as getters from '../vuex/getters';
+import * as actions from '../vuex/actions';
 
 export default {
     vuex: {
@@ -26,7 +26,8 @@ export default {
         actions: {
             playPrevious: actions.playPrevious,
             playNext: actions.playNext,
-            playMusic: actions.playMusic
+            playMusic: actions.playMusic,
+            clearFoundedMusics: actions.clearFoundedMusics
         }
     },
     watch: {
@@ -36,6 +37,7 @@ export default {
             }
 
             this.$els.audio.play();
+            this.clearFoundedMusics();
         },
     },
     route: {

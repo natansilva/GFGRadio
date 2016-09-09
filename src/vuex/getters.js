@@ -1,31 +1,31 @@
 export function getAlbums (state) {
-    return state.albums
+    return state.albums;
 }
 
 export function getActualMusic (state) {
-    return state.actualMusic
+    return state.actualMusic;
 }
 
 export function getActualPathFile (state) {
-    return state.actualPathFile
+    return state.actualPathFile;
 }
 
 export function getActualExtension (state) {
-    return state.actualExtension
+    return state.actualExtension;
 }
 
 export function getUrl (state) {
-    return state.url
+    return state.url;
 }
 
 export function getActualAlbum (state) {
-    return state.actualAlbum
+    return state.actualAlbum;
 }
 
 export function getActualMusicId (state) {
-    return state.actualMusicId
+    return state.actualMusicId;
 }
 
 export function getMusics (state) {
-    return state.musics
+    return state.musics;
 }

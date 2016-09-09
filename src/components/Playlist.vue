@@ -40,10 +40,11 @@ export default {
 
 <style scoped>
 .album {
-  font-size: 1.2em;
+    color: #337ab7;
+    font-size: 1.2em;
 }
 
 .music {
-  color: black
+    color: black;
 }
 </style>

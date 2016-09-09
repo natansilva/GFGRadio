@@ -19,7 +19,7 @@
     export default {
         vuex: {
             getters: {
-                musics: getMusics
+                musics: getMusics,
             },
             actions: {
                 findMusic: getMusicsByName

@@ -70,3 +70,7 @@ export const getMusicsByName = function ({ dispatch, state }, name) {
         dispatch('SET_FOUND_MUSICS', musics);
     });
 }
+
+export const clearFoundedMusics = function ({ dispatch, state }) {
+    dispatch('SET_FOUND_MUSICS', []);
+}
