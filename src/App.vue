@@ -1,9 +1,9 @@
 <template>
-<div>
-    <search class="col-md-12"></search>
-    <playlist class="col-md-9 text-left"></playlist>
-    <router-view keep-alive class="col-md-3 text-center"></router-view>
-</div>
+    <div>
+        <search class="col-md-11"></search>
+        <playlist class="col-md-8 text-left"></playlist>
+        <router-view keep-alive class="col-md-3 text-center"></router-view>
+    </div>
 </template>
 
 <script>
@@ -27,20 +27,20 @@ export default {
     #search {
         z-index: 9999;
         position:fixed;
-        background-color: #337ab7;
-        left: 10px;
+        align-self: center;
+        left: 45px;
         top: 10px;
     }
 
     #playerAudio {
-        background-color: #ffffff;
         top: 100px;
-        right: 10px;
+        right: 72px;
         height: 204px;
         position:fixed;
     }
 
     #playlist {
         top: 110px;
+        left: 46px;
     }
 </style>

@@ -7,7 +7,6 @@
             </a>
             <div v-for="music in album.musics">
                 <a v-link="{name: 'homeMusic', params: {id: music.id}}" v-show="actualAlbum === album.albumName" class="music">
-                    &emsp;
                     <span class="glyphicon glyphicon-music music" aria-hidden="true"></span>
                     {{ music.musicName }}
                 </a>
@@ -46,5 +45,9 @@ export default {
 
 .music {
     color: black;
+}
+
+#playlist {
+    
 }
 </style>
