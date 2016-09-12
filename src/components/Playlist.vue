@@ -47,7 +47,4 @@ export default {
     color: black;
 }
 
-#playlist {
-    
-}
 </style>

@@ -29,18 +29,17 @@ export default {
         position:fixed;
         align-self: center;
         left: 45px;
-        top: 10px;
     }
 
     #playerAudio {
-        top: 100px;
+        top: 90px;
         right: 72px;
         height: 204px;
         position:fixed;
     }
 
     #playlist {
-        top: 110px;
+        top: 100px;
         left: 46px;
     }
 </style>
