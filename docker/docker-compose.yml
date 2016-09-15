@@ -5,5 +5,5 @@ radio:
     - "80:80"
     - "9001:8080"
   volumes:
-    - /var/www/radio/:/var/www/
+    - ../:/var/www/
     - ~/Music/Musicas:/var/www/music/
