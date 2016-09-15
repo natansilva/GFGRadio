@@ -2,8 +2,8 @@ radio:
   image: natansilva/radio:vuejs
   container_name: radio
   ports:
+    - "80:80"
     - "9001:8080"
-    - "9002:80"
   volumes:
     - /var/www/radio/:/var/www/
     - ~/Music/Musicas:/var/www/music/

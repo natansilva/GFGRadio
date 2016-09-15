@@ -29,3 +29,7 @@ export function getActualMusicId (state) {
 export function getMusics (state) {
     return state.musics;
 }
+
+export function getHistory (state) {
+    return state.history;
+}

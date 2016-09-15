@@ -1,16 +1,6 @@
 <template>
-    <div id="search" class="searchNavBar">
-        <br/>
-        <div class="navbar" class="searchNavBar">
-            <div class="form-group">
-                <input type="text" @keyUp="findMusic(searchMusic) | debounce 500" v-model="searchMusic" debounce="500" placeholder="Pesquisar" class="form-control"/>
-                <div class="resultMusics">
-                    <div v-for="music in musics" class="text-center">
-                        <a v-link="{name: 'homeMusic', params: {id: music.id}}" class="foundMusics">{{ music.albumName }} - {{ music.musicName }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+        <input type="text" class="searchBar" @keyUp="findMusic(searchMusic) | debounce 500" v-model="searchMusic" debounce="500" placeholder="Pesquisar" class="form-control"/>
     </div>
 </template>
 
@@ -19,6 +9,11 @@
     import { getMusics } from '../vuex/getters'
 
     export default {
+        data(){
+            return {
+                searchMusic: ''
+            };
+        },
         vuex: {
             getters: {
                 musics: getMusics,
@@ -31,14 +26,10 @@
 </script>
 
 <style>
-    .foundMusics {
-        color: #337ab7;
-    }
-    .resultMusics {
-        background-color: #000000;
-        border-color: #000000;
-    }
-    #search {
-        background-color:#ffffff; 
-    }
+.searchBar {
+    margin-top: 14px;
+    height: 60%;
+    width: 80%;
+    margin-left: 10%;
+}
 </style>

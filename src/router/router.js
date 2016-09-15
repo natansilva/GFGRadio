@@ -15,12 +15,11 @@ router.map({
         name: 'home',
         component: Player
     },
-
     ':id': {
         name: 'homeMusic',
         component: Player
     }
 });
 
-export const baseUrl = window.location.href.toString().substring(0, window.location.href.toString().indexOf(':9')+1) + basePort;
+export const baseUrl = window.location.href.toString().substring(0, window.location.href.toString().indexOf(':9')+1);
 export default router

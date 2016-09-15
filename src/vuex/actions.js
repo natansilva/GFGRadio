@@ -8,12 +8,7 @@ export const getAlbums = function ({ dispatch, state }) {
 
 export const playMusic = function ({ dispatch, state }, id) {
     AlbumApi.getMusicById(id).then(function(music) {
-        dispatch( 'UPDATE_ACTUAL_MUSIC',
-            music['pathFile'],
-            music['id'],
-            music['musicName'],
-            music['extension']
-        )
+        dispatch( 'UPDATE_ACTUAL_MUSIC', music['pathFile'], music['id'], music['musicName'], music['extension']);
     }).catch(function(ex) {
         console.log(ex);
     });
@@ -61,16 +56,17 @@ export const setActualAlbum = function ({ dispatch, state }, newAlbum) {
 
 export const initializeAlbums = function ({ dispatch, state }) {
     AlbumApi.getAlbums().then(function(albums) {
-        dispatch('SET_ALBUM', albums)
+        dispatch('SET_ALBUM', albums);
     });
+}
+
+export const setMusics = function ({ dispatch, state }, musics) {
+    dispatch('SET_MUSICS', musics);
 }
 
 export const getMusicsByName = function ({ dispatch, state }, name) {
-    AlbumApi.getMusicsByName(name).then(function (musics) {
-        dispatch('SET_FOUND_MUSICS', musics);
+    AlbumApi.getMusicsByName(name).then(function(musics){
+        console.log(musics);
+        dispatch('SET_MUSICS', musics);
     });
-}
-
-export const clearFoundedMusics = function ({ dispatch, state }) {
-    dispatch('SET_FOUND_MUSICS', []);
 }

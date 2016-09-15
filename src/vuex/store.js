@@ -13,6 +13,7 @@ const state = {
     actualAlbum: '',
     albums: [],
     musics: [],
+    history: []
 };
 
 const mutations = {
@@ -36,8 +37,11 @@ const mutations = {
         }
     },
 
-    SET_FOUND_MUSICS (state, musics) {
+    SET_MUSICS (state, musics) {
         state.musics = musics;
+    },
+    SET_HISTORY (state, music) {
+        state.history.push(music);
     }
 };
 
