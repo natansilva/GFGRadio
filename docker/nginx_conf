@@ -10,7 +10,7 @@ server {
 		try_files $uri $uri/ /index.php$is_args$args;
 	}
 
-	location / {
+	location /static {
 		alias /var/www/dist/static/;
 	}
 
