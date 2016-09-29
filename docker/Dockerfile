@@ -1,6 +1,8 @@
 FROM ubuntu:16.04
 MAINTAINER Natan Silva <natan.silva@gmail.com>
 
+ENV TERM xterm
+
 #Basic
 RUN mkdir /music && \
     chmod 777 -R /music && \
