@@ -2,8 +2,8 @@ FROM ubuntu:16.04
 MAINTAINER Natan Silva <natan.silva@gmail.com>
 
 #Basic
-RUN mkdir /music && \
-    chmod 777 -R /music && \
+RUN mkdir  /var/run/php && \
+    chmod 777 -R  /var/run/php && \
     apt-get update -y && \
     apt-get install -y wget && \
     apt-get install -y curl
