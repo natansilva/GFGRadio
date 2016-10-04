@@ -1,23 +1,35 @@
 <template>
 <div id="playerbar">
-    <mdl-progress :progress="current" id="progress-bar" @click="changeTime"></mdl-progress>
-    <div>
-        <audio v-el:audio v-on:ended="playNext(actualMusicId)" @timeupdate="changeDuration" id="player" v-bind:src="url"></audio>
+  <mdl-progress :progress="current" class="progress-bar" @click="changeTime"></mdl-progress>
+  <div class="playerControl">
+    <audio v-el:audio v-on:ended="playNext(actualMusicId)" @timeupdate="changeDuration" id="player" v-bind:src="url"></audio>
 
-        <mdl-button v-mdl-ripple-effect class="player-icon" icon="skip_previous" @click.prevent="playPrevious(actualMusicId)"></mdl-button>
-        <mdl-button v-mdl-ripple-effect class="player-icon" icon="play_arrow" @click.prevent="play()"></mdl-button>
-        <mdl-button v-mdl-ripple-effect class="player-icon" icon="pause" @click.prevent="pause()"></mdl-button>
-        <mdl-button v-mdl-ripple-effect class="player-icon" icon="skip_next" @click.prevent="playNext(actualMusicId)"></mdl-button>
-
-        {{ actualMusic }}
-
-        <a download v-bind:href="url">
-            <mdl-button v-mdl-ripple-effect class="player-icon more-buttons" icon="file_download"></mdl-button>
-        </a>
-        <mdl-button v-mdl-ripple-effect class="player-icon more-buttons" icon="share" @click.prevent="copyUrl()"></mdl-button>
-
+    <div class="playerControlLeft">
+      <mdl-button v-mdl-ripple-effect class="player-icon" icon="skip_previous" @click.prevent="playPrevious(actualMusicId)"></mdl-button>
+      <mdl-button v-mdl-ripple-effect class="player-icon" icon="play_arrow" @click.prevent="play()"></mdl-button>
+      <mdl-button v-mdl-ripple-effect class="player-icon" icon="pause" @click.prevent="pause()"></mdl-button>
+      <mdl-button v-mdl-ripple-effect class="player-icon" icon="skip_next" @click.prevent="playNext(actualMusicId)"></mdl-button>
     </div>
 
+    <div class="playerControlMiddle">
+      {{ actualMusic }}
+    </div>
+
+    <div class="playerControlRight">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+            <label class="mdl-button mdl-js-button mdl-button--icon" id="searchButton"for="searchBar">
+                <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+                <input class="mdl-textfield__input" type="search" id="searchBar" @keyUp="findMusic(searchMusic) | debounce 500" v-model="searchMusic" debounce="500"/>
+                <label class="mdl-textfield__label" for="searchBar">Pesquisar</label>
+            </div>
+        </div>
+        <mdl-button v-mdl-ripple-effect class="player-icon more-buttons" icon="loop"></mdl-button>
+        <mdl-button v-mdl-ripple-effect class="player-icon more-buttons" icon="share" @click.prevent="copyUrl()"></mdl-button>
+        <a download v-bind:href="url"><mdl-button v-mdl-ripple-effect class="player-icon more-buttons" icon="file_download"></mdl-button></a>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -28,7 +40,8 @@ import * as actions from '../vuex/actions';
 export default {
     data(){
         return {
-            current: 0
+            current: 0,
+            searchMusic: '',
         };
     },
   methods: {
@@ -53,12 +66,14 @@ export default {
     getters: {
       actualMusicId: getters.getActualMusicId,
       actualMusic: getters.getActualMusic,
-      url: getters.getUrl
+      url: getters.getUrl,
+      musics: getters.getMusics,
     },
     actions: {
       playPrevious: actions.playPrevious,
       playNext: actions.playNext,
-      playMusic: actions.playMusic
+      playMusic: actions.playMusic,
+      findMusic: actions.getMusicsByName,
     }
   },
   watch: {
@@ -82,19 +97,38 @@ export default {
 
 <style>
 
-#progress-bar {
-    width: 100%;
-    height: 10px;
+.playerControl {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  height: 48px;
+  align-items: center;
 }
 
-.player-icon {
-    margin-top: 5px;
-    width: 50px;
-    height: 50px;
+.playerControlLeft {
+  width: 20vw;
+  display: flex;
+  justify-content: center;
 }
 
-.more-buttons {
-    float:right
+.playerControlMiddle {
+  flex: 1;
+  display: flex;
+  margin-left: 1vw;
+  justify-content: left;
 }
 
+.playerControlRight {
+    text-align: right;
+    min-width: 50vw;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 5px;
+}
+
+#searchButton {
+    margin-top: 2.8px;
+}
 </style>

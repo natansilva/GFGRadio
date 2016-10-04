@@ -12,7 +12,11 @@ server {
     }
 
     location /static {
-      alias /var/www/dist/static/;
+        alias /var/www/dist/static/;
+    }
+
+    location /rest {
+        alias /var/www/src/rest/;
     }
 
     location ~ \.php$ {

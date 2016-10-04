@@ -31,6 +31,7 @@ ADD Entrypoint.sh /Entrypoint.sh
 ADD nginx_conf /etc/nginx/sites-enabled/default
 
 VOLUME /var/www/
+WORKDIR /var/www/
 
 EXPOSE 80
 EXPOSE 8080

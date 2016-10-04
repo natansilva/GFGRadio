@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <input type="text" class="searchBar" @keyUp="findMusic(searchMusic) | debounce 500" v-model="searchMusic" debounce="500" placeholder="Pesquisar" class="form-control"/>
+    <div id="search">
+      <input type="text" class="searchBar" @keyUp="findMusic(searchMusic) | debounce 500" v-model="searchMusic" debounce="500" placeholder="Pesquisar" class="form-control"/>
     </div>
 </template>
 
@@ -11,15 +11,15 @@
     export default {
         data(){
             return {
-                searchMusic: ''
+              searchMusic: ''
             };
         },
         vuex: {
             getters: {
-                musics: getMusics,
+              musics: getMusics,
             },
             actions: {
-                findMusic: getMusicsByName
+              findMusic: getMusicsByName
             }
         },
     }
@@ -27,9 +27,10 @@
 
 <style>
 .searchBar {
-    margin-top: 14px;
-    height: 60%;
-    width: 80%;
-    margin-left: 10%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10%;
+  width: 80%;
+  height: 30px;
 }
 </style>

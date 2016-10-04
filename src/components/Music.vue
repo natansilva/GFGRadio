@@ -31,6 +31,11 @@ export default {
     flex-direction: column;
     margin: 0;
     list-style: none;
+    color: #000000;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
+    border-radius: 2px;
 }
 
 .app-musics-title {
@@ -38,8 +43,7 @@ export default {
     padding: 20px;
     font-size: 24px;
     line-height: 24px;
-    box-shadow: 0 1px 10px 0 #000;
-    background: #111;
+    box-shadow: 0px 5px 9px 2px rgba(0,0,0,0.75);
 }
 
 .app-musics-list {
@@ -52,7 +56,5 @@ export default {
     margin: 0;
     width: 100%;
     height: 48px;
-    border-bottom: 1px solid rgba(0, 0, 0, .4);
-    color: #fff;
 }
 </style>

@@ -3,7 +3,7 @@ radio:
   container_name: radio
   ports:
     - "80:80"
-    - "9001:8080"
+    - "8080:8080"
   volumes:
     - ../:/var/www/
     - ~/Music/Musicas:/var/www/music/

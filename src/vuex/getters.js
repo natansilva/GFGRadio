@@ -33,3 +33,7 @@ export function getMusics (state) {
 export function getHistory (state) {
     return state.history;
 }
+
+export function getActiveSideBarItem (state) {
+    return state.activeSideBarItem;
+}

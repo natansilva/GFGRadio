@@ -11,6 +11,7 @@ const state = {
     actualExtension: '',
     url: '',
     actualAlbum: '',
+    activeSideBarItem: '',
     albums: [],
     musics: [],
     history: []
@@ -40,8 +41,13 @@ const mutations = {
     SET_MUSICS (state, musics) {
         state.musics = musics;
     },
+
     SET_HISTORY (state, music) {
-        state.history.push(music);
+        state.history.unshift(music);
+    },
+
+    SET_SIDE_BAR_ITEM (state, activeSideBarItem) {
+        state.activeSideBarItem = activeSideBarItem;
     }
 };
 

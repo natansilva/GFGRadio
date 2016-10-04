@@ -9,6 +9,7 @@ export const getAlbums = function ({ dispatch, state }) {
 export const playMusic = function ({ dispatch, state }, id) {
     AlbumApi.getMusicById(id).then(function(music) {
         dispatch( 'UPDATE_ACTUAL_MUSIC', music['pathFile'], music['id'], music['musicName'], music['extension']);
+        dispatch('SET_HISTORY', music);
     }).catch(function(ex) {
         console.log(ex);
     });
@@ -66,7 +67,14 @@ export const setMusics = function ({ dispatch, state }, musics) {
 
 export const getMusicsByName = function ({ dispatch, state }, name) {
     AlbumApi.getMusicsByName(name).then(function(musics){
-        console.log(musics);
         dispatch('SET_MUSICS', musics);
     });
+}
+
+export const toogleShowSideBarItem = function ({ dispatch, state }, sideBarItem) {
+    if (sideBarItem === state.activeSideBarItem) {
+        dispatch('SET_SIDE_BAR_ITEM', '');
+    } else {
+        dispatch('SET_SIDE_BAR_ITEM', sideBarItem);
+    }
 }
