@@ -5,7 +5,7 @@ import { baseUrl } from '../router/router'
 
 export function getMusicById (id)
 {
-    const url = `${baseUrl}/src/rest/album/AlbumApi.php?action=getMusic&id=${id}`;
+    const url = `${baseUrl}/restAlbum/AlbumApi.php?action=getMusic&id=${id}`;
 
     return fetch(url)
         .then(function (response) {
@@ -19,7 +19,7 @@ export function getMusicById (id)
 
 export function getAlbums()
 {
-    const url = `${baseUrl}/src/rest/album/AlbumApi.php?action=loadAlbum&page=1`;
+    const url = `${baseUrl}/restAlbum/AlbumApi.php?action=loadAlbum&page=1`;
 
     return fetch(url)
         .then(function (response) {
@@ -33,7 +33,7 @@ export function getAlbums()
 
 export function getMusicsByName(name)
 {
-    const url = `${baseUrl}/src/rest/album/AlbumApi.php?action=findMusic&musicName=${name}`;
+    const url = `${baseUrl}/restAlbum/AlbumApi.php?action=findMusic&musicName=${name}`;
 
     return fetch(url)
     .then(function (response) {
