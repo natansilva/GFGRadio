@@ -1,17 +1,17 @@
 <template>
 <div class="app">
-    <router-view keep-alive class="app-player"></router-view>
-    <div class="app-content">
-        <div class="app-sidebar">
-            <div class="app-sidebar-item">
-                <history></history>
-            </div>
-        </div>
-        <div class="app-lists">
-            <album></album>
-            <musics></musics>
-        </div>
+  <router-view keep-alive class="app-player"></router-view>
+  <div class="app-content">
+    <div class="app-sidebar">
+      <div class="app-sidebar-item">
+        <history></history>
+      </div>
     </div>
+    <div class="app-lists">
+      <album></album>
+      <musics></musics>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -77,29 +77,31 @@ body {
 }
 
 .app-sidebar-item {
-    flex-direction: column;
-    min-height: 4vh;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #000000;
-    border-radius: 2px;
+  flex-direction: column;
+  min-height: 4vh;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #000000;
+  border-radius: 2px;
 }
 
 .app-sidebar-item-title {
-    margin: 0;
-    font-size: 24px;
-    text-align: center;
-    box-shadow: 0px 5px 9px 2px rgba(0,0,0,0.75);
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  box-shadow: 0px 5px 9px 2px rgba(0,0,0,0.75);
 }
 
 .app-sidebar-item-list {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow-y: overlay;
+  overflow-x: overlay;
 }
 
 .app-sidebar-item-list-item {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .app-lists {

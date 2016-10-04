@@ -8,15 +8,6 @@ server {
 
     location / {
       try_files $uri $uri/ /index.php$is_args$args;
-      alias /var/www/dist/;
-    }
-
-    location /static {
-        alias /var/www/dist/static/;
-    }
-
-    location /rest {
-        alias /var/www/src/rest/;
     }
 
     location ~ \.php$ {
