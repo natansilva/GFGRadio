@@ -31,7 +31,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x -o ./nodesource_setup.sh  && \
 ADD Entrypoint.sh /Entrypoint.sh
 
 VOLUME /var/www/
-VOLUME /etc/nginx/sites-enable/
+VOLUME /etc/nginx/sites-available/
 VOLUME /etc/supervisor/conf.d/
 WORKDIR /var/www/
 
