@@ -96,8 +96,8 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  overflow-y: overlay;
-  overflow-x: overlay;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .app-sidebar-item-list-item {
