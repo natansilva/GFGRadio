@@ -12,11 +12,11 @@ const router = new Router({
 });
 
 router.map({
-    '/': {
+    '/radio': {
         name: 'home',
         component: Player
     },
-    ':id': {
+    '/radio/:id': {
         name: 'homeMusic',
         component: Player
     },
